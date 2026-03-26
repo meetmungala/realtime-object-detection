@@ -22,6 +22,17 @@
    - Bibliography & sources
 
 
+### 🚀 NEW: YOLOv4-Tiny (80 Classes) Upgrade!
+The original project shipped with MobileNet-SSD trained on the PASCAL VOC dataset (detecting only 20 objects). We have now introduced a brand new, highly robust **YOLOv4-Tiny** implementation.
+
+**File:** `yolo_real_time.py`
+This script uses YOLOv4-Tiny trained on the much broader **COCO Dataset**, allowing it to identify **80 different everyday objects** (including backpacks, laptops, mice, cell phones, etc.) in real time with amazing CPU-level performance!
+
+**Run the new engine:**
+```bash
+python yolo_real_time.py
+```
+
 ### Introduction
 
 In this guide we will walk through all the steps needed to set up our machine so we can then apply real-time object detection using **deep learning** and **OpenCV** to work with video streams and video files. In order to do that we will use the **VideoStream** class that comes with the **imutils** package.
