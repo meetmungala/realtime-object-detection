@@ -27,8 +27,8 @@ while True:
     frame = cv2.resize(frame, (600, 450))
     height, width, channels = frame.shape
 
-    # Detecting objects (Increased resolution to 416x416 for better precision on smaller items)
-    blob = cv2.dnn.blobFromImage(frame, 1/255.0, (416, 416), swapRB=True, crop=False)
+    # Detecting objects (Increased resolution to 608x608 for maximum detection accuracy)
+    blob = cv2.dnn.blobFromImage(frame, 1/255.0, (608, 608), swapRB=True, crop=False)
     net.setInput(blob)
     outs = net.forward(output_layers)
 
@@ -42,7 +42,7 @@ while True:
             scores = detection[5:]
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            if confidence > 0.2:  # Lowered threshold to pick up less confident objects
+            if confidence > 0.45:  # Increased threshold to only show confident and accurate detections
                 # Object detected
                 center_x = int(detection[0] * width)
                 center_y = int(detection[1] * height)
@@ -57,8 +57,8 @@ while True:
                 confidences.append(float(confidence))
                 class_ids.append(class_id)
 
-    # Apply Non-Max Suppression
-    indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.2, 0.3)
+    # Apply Non-Max Suppression to remove overlapping boxes
+    indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.45, 0.4)
 
     if len(indexes) > 0:
         for i in indexes.flatten():
